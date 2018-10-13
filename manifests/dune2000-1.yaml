@@ -1,0 +1,42 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: openra-d2k-1
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: openra-d2k-1
+    spec:
+      containers:
+      - name: openra-d2k-1
+        image: rmoriz/openra:20180923
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 1234
+        env:
+          - name: Name
+            value: "NPF FFA - Dune 2000 1"
+          - name: Mod
+            value: "d2k"
+          - name: AdvertiseOnline
+            value: "False"
+        resources:
+          requests:
+            memory: "2000Mi"
+            cpu: "3"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: openra-d2k-1
+  labels:
+    app: openra-d2k-1
+spec:
+  selector:
+    app: openra-d2k-1
+  ports:
+    - protocol: TCP
+      port: 1234
+      targetPort: 1234

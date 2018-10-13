@@ -1,0 +1,42 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: openra-cnc-2
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: openra-cnc-2
+    spec:
+      containers:
+      - name: openra-cnc-2
+        image: rmoriz/openra:20180923
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 1234
+        env:
+          - name: Name
+            value: "NPF FFA - Command & Conquer 2"
+          - name: Mod
+            value: cnc
+          - name: AdvertiseOnline
+            value: "False"
+        resources:
+          requests:
+            memory: "1500Mi"
+            cpu: "3"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: openra-cnc-2
+  labels:
+    app: openra-cnc-2
+spec:
+  selector:
+    app: openra-cnc-2
+  ports:
+    - protocol: TCP
+      port: 1234
+      targetPort: 1234
