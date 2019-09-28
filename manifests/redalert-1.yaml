@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
       - name: openra-ra-1
-        image: rmoriz/openra:20190314
+        image: rmoriz/openra:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 1234
